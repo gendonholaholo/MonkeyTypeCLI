@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "monkeytyper-cli"
+version = "0.1.0"
+authors = [
+  { name="Your Name", email="you@example.com" }, # TODO: Update author details
+]
+description = "A CLI for Monkeytype."
+readme = "README.md" # Points to the root README
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Games/Entertainment",
+    "Topic :: Terminals",
+    "Typing :: Typed",
+]
+dependencies = [
+    "typer[all]>=0.9.0,<1.0.0", # Using typer[all] for rich support initially
+    "httpx[http2]>=0.25.0,<1.0.0",
+    "rich>=13.0.0,<14.0.0",
+    "pydantic>=2.0,<3.0",
+    "python-dotenv>=1.0.0,<2.0.0",
+    # "keyring", # Optional, for more secure storage
+]
+
+[project.urls]
+"Homepage" = "https://github.com/your-username/monkeytyper-cli" # TODO: Update URL
+"Bug Tracker" = "https://github.com/your-username/monkeytyper-cli/issues" # TODO: Update URL
+
+[project.scripts]
+monkeytyper-cli = "monkeytyper_cli.main:app" # Entry point for the CLI
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0,<9.0",
+    "pytest-cov>=4.0,<6.0",
+    "black>=23.0,<25.0",
+    "ruff>=0.1.0,<0.6.0",
+    "mypy>=1.0,<2.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.black]
+line-length = 88
+target-version = ['py310', 'py311', 'py312']
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "W", "I", "C90", "N", "UP", "B", "A", "RUF"]
+ignore = ["E501"] # Ignored by black
+target-version = "py310"
+
+[tool.ruff.lint.isort]
+known-first-party = ["monkeytyper_cli"]
+
+[tool.mypy]
+python_version = "3.10"
+warnings_as_errors = true
+# strict = true # Enable for stricter checking later
+ignore_missing_imports = true # Can be helpful initially
+packages = ["monkeytyper_cli"] 
