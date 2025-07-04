@@ -251,7 +251,7 @@ Distributed under the MIT License. See `LICENSE` file for more information.
 
 ---
 
-## ⚠️ Known Limitations
+## Known Limitations
 
 - **Prompt Source:** As mentioned in Features, fetching official, dynamically generated prompts like the main Monkeytype site is not yet implemented due to API endpoint uncertainty.
 - **Result Submission:** Submitting test results back to Monkeytype is not currently supported (pending API capability confirmation).
@@ -259,7 +259,7 @@ Distributed under the MIT License. See `LICENSE` file for more information.
 
 ---
 
-## ✅ Definition of Done (v1.0 Target)
+## Definition of Done (v1.0 Target)
 
 - Interactive menu interface implemented and functional.
 - Core features functional: `start` (with time/word modes), `stats pbs` (auth), `leaderboard`.
@@ -278,7 +278,7 @@ Distributed under the MIT License. See `LICENSE` file for more information.
 
 ---
 
-## 🛣️ Roadmap (Planned Features)
+## Roadmap (Planned Features)
 
 - **Interactive Menu Enhancement:** Improve the menu system with more options and customization.
 - **Additional Languages:** Support for more languages beyond English and Bahasa Indonesia.
