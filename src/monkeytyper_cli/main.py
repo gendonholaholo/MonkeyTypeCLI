@@ -32,6 +32,17 @@ from monkeytyper_cli.api.client import APIClient, ApiClientError
 from monkeytyper_cli.ui import stats as ui_stats
 from monkeytyper_cli.ui import leaderboard as ui_leaderboard
 
+# ANSI escape codes
+CLEAR_SCREEN = "\033[2J\033[H"
+
+def clear_terminal():
+    """Clear the terminal screen."""
+    if platform.system() == "Windows":
+        subprocess.run("cls", shell=True)
+    else:
+        sys.stdout.write(CLEAR_SCREEN)
+        sys.stdout.flush()
+
 user_settings = UserSettings.load()
 
 session_history: List[TestResult] = []
@@ -129,15 +140,15 @@ def start(
          raise typer.Exit(1)
 
     try:
-        with Live(create_prompt_display(game_state), refresh_per_second=10, console=console, transient=True) as live:
-            while not game_state.is_finished():
-                char = _get_char()
-                if ord(char) == 3:
-                    raise typer.Exit()
+        while not game_state.is_finished():
+            clear_terminal()
+            console.print(create_prompt_display(game_state))
+            
+            char = _get_char()
+            if ord(char) == 3:
+                raise typer.Exit()
 
-                engine.process_input(game_state, char)
-
-                live.update(create_prompt_display(game_state))
+            engine.process_input(game_state, char)
 
         if game_state.state != TestState.FINISHED:
             engine.finish_game(game_state)
