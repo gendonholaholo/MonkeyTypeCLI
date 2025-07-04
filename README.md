@@ -1,4 +1,4 @@
-# MonkeyTyper CLI 🐒⌨️
+# MonkeyTyper CLI
 
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -12,7 +12,7 @@ A command-line interface (CLI) application built with Python to play typing game
 
 ---
 
-## ✨ Features
+## Features
 
 - **Typing Games in Terminal:** Play various typing modes directly in your console.
 - **Interactive Menu Interface:** Easy-to-navigate menu system for all application features.
@@ -32,7 +32,7 @@ A command-line interface (CLI) application built with Python to play typing game
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Language:** Python (>=3.10)
 - **CLI Framework:** [Typer](https://typer.tiangolo.com/) (based on Click)
@@ -44,7 +44,7 @@ A command-line interface (CLI) application built with Python to play typing game
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 The project follows a modular structure for better organization and maintainability:
 
@@ -97,7 +97,7 @@ monkeytyper-cli/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -187,7 +187,7 @@ Run `monkeytyper-cli --help` for a full list of commands and options.
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Tests are written using `pytest`.
 
@@ -199,7 +199,7 @@ Tests are written using `pytest`.
 
 ---
 
-## 🌐 Monkeytype API Integration
+## Monkeytype API Integration
 
 This application interacts with the official [Monkeytype API v2](https://api.monkeytype.com/docs).
 
@@ -225,7 +225,7 @@ _(Detailed request/response examples for each endpoint could be added here or in
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please follow standard Fork & Pull Request workflows. Ensure tests pass and code adheres to linting/formatting standards (`ruff`, `black`).
 
@@ -237,19 +237,17 @@ Contributions are welcome! Please follow standard Fork & Pull Request workflows.
 
 ---
 
-## 📜 License
+## License
 
 Distributed under the MIT License. See `LICENSE` file for more information.
 
 ---
 
-## 🙏 Acknowledgements
+## Acknowledgements
 
 - [Monkeytype](https://monkeytype.com/) for the awesome typing platform and API.
 - [Typer](https://typer.tiangolo.com/)
 - [httpx](https://www.python-httpx.org/)
-- [rich](https://rich.readthedocs.io/en/stable/)
-- [Python](https://python.org) Community
 
 ---
 
