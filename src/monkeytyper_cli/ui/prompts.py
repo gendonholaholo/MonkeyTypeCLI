@@ -4,7 +4,6 @@ from rich.console import Console, Group
 from rich.text import Text
 from rich.table import Table
 from rich.panel import Panel
-from rich.live import Live
 import time
 
 from monkeytyper_cli.core.models import GameState, TestResult, GameMode
@@ -18,75 +17,55 @@ console = Console()
 def create_prompt_display(game_state: GameState) -> Panel:
     """Creates a Rich Renderable object representing the current game state."""
     prompt_text = game_state.prompt_text
-    user_input_text = game_state.user_input_text # Use processed input text
+    user_input_text = game_state.user_input_text
     error_indices = game_state.error_indices
     current_index = len(user_input_text)
 
+    # Calculate visible portion of text
+    console_width = console.width - 6  # Account for panel borders and padding
+    visible_chars = console_width
+    
+    # Center the text in view
+    start_index = max(0, current_index - (visible_chars // 2))
+    end_index = min(len(prompt_text), start_index + visible_chars)
+    
+    # Create the display text
     display = Text()
-
-    for i, char in enumerate(prompt_text):
-        style = "dim grey50" # Default style for upcoming text
-        display_char = char if char != ' ' else '·' # Use middle dot for space vis
-
+    
+    for i in range(start_index, end_index):
+        char = prompt_text[i]
+        display_char = '·' if char == ' ' else char
+        
         if i < current_index:
-            # Character has been typed or passed
-            typed_char = user_input_text[i]
-            if i in error_indices:
-                # Style the *prompt* character red if the typed one was wrong
-                style = "bold red"
-                # Optionally display the wrong typed char?
-                # display_char = typed_char # This might look confusing
-            else:
-                style = "bold green" # Correct character
+            style = "bold green" if i not in error_indices else "bold red"
         elif i == current_index:
-            # Current character to be typed (cursor position)
             style = "reverse bold blue"
-            # If prompt is shorter than input (shouldn't happen with error handling)
-            if i >= len(prompt_text):
-                 style = "reverse bold red" # Error cursor?
-
-        # Handle cases where user typed more than prompt length
-        # These are implicitly handled by `error_indices` added in engine
-
+        else:
+            style = "dim grey50"
+            
         display.append(display_char, style=style)
 
-    # Add extra character indicators if user typed past the end
-    if len(user_input_text) > len(prompt_text):
-         extra_typed = user_input_text[len(prompt_text):]
-         for char in extra_typed:
-             display.append(char, style="on red") # Indicate extra chars
-
-
-    # Add Status Information
-    status_line = Text()
+    # Add status information
     elapsed_time = game_state.time_elapsed()
-
+    status = Text()
+    
     if game_state.mode == GameMode.TIME:
         time_left = max(0, game_state.config_value - elapsed_time)
-        status_line.append(f"Time Left: {time_left:.1f}s", style="yellow")
-    elif game_state.mode == GameMode.WORDS:
-        # Calculate words typed based on spaces in correct input prefix
-        # This is an approximation
-        correct_prefix = ""
-        for i in range(min(len(user_input_text), len(prompt_text))):
-             if i not in error_indices:
-                 correct_prefix += user_input_text[i]
-             else:
-                 break # Stop counting at first error for word count
-        words_typed = correct_prefix.count(' ')
-        # Add 1 if currently typing a word
-        if correct_prefix and not correct_prefix.endswith(' '):
-             words_typed += 1
-        status_line.append(f"Words: {words_typed}/{game_state.config_value}", style="yellow")
+        status.append(f"Time: {time_left:.1f}s", style="yellow")
+    else:
+        words_typed = user_input_text.count(' ')
+        if user_input_text and not user_input_text.endswith(' '):
+            words_typed += 1
+        status.append(f"Words: {words_typed}/{game_state.config_value}", style="yellow")
 
-    # Combine prompt and status in a panel
+    # Create the panel with both display and status
     content = Group(
         display,
-        "\n", # Add a newline for separation
-        status_line
+        Text(),  # Empty line for padding
+        status
     )
-
-    return Panel(content, title="MonkeyTyper CLI", border_style="blue")
+    
+    return Panel(content, title="MonkeyTyper CLI", border_style="blue", padding=(0, 1))
 
 
 # This function is obsolete now, main.py will use Live with create_prompt_display
